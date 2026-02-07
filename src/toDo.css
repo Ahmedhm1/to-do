@@ -1,0 +1,177 @@
+.box {
+    background-color: white;
+    color: black;
+    text-align: center;
+    padding: 0 20px;
+    border-radius: 10px;
+    min-height: 350px;
+    display: grid;
+    grid-template-rows: auto auto 1fr auto;
+}
+
+h1,h2,h3,h4,h5,h6 {
+    padding: 0;
+    margin: 0;
+    direction: rtl;
+}
+
+.title {
+    position: relative;
+}
+
+.title h1 {
+    font-size: 70px;
+    position: relative;
+    z-index: 3;
+}
+
+.title>hr {
+    position: absolute;
+    bottom: 5px;
+    width: 95%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+    border-color: #f2f2f2af;
+}
+
+.options {
+    padding-top: 15px;
+    justify-content: center;
+}
+
+.options .selected {
+    background-color: #ffc0d09a;
+}
+
+.tasks .noTasks {
+    margin-top: 20px;
+    font-size: larger;
+    font-weight: 300;
+}
+
+.tasks .task {
+    color: white;
+    margin: 25px 0;
+    padding: 20px 15px;
+    border-radius: 10px;
+    text-align: right;
+    background-color: #252F83;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+}
+
+.tasks .task h2 {
+    font-size: 20px;
+    font-weight: 500;
+}
+.tasks .task h4 {
+    font-size: 18px;
+    font-weight: lighter;
+}
+
+.tasks .task .icons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tasks .task .icons .icon {
+    padding: 3px;
+    margin: 0 5px;
+}
+
+.tasks .task .icons .icon1 {
+    color: brown;
+    background-color: white;
+    border: 2px solid brown;
+}
+
+.tasks .task .icons .icon2 {
+    color: #365A78;
+    background-color: white;
+    border: 2px solid #365A78;
+}
+
+.tasks .task .icons .icon3 {
+    color: #92A86F;
+    background-color: white;
+    border: 2px solid #92A86F;
+}
+
+.add {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    padding-bottom: 20px;
+    gap: 10px;
+}
+
+.add .btnTitle {
+    font-size: 20px;
+    background-color: #99163C;
+}
+
+@media (min-width: 768px) {
+    .warning {
+        min-width: 350px !important; 
+    }
+
+    .editTask {
+        min-width: 250px !important; 
+    }
+}
+
+.warningbtns button {
+    color: brown;
+    font-size: 15px;
+    font-weight: bold;
+    transition-duration: 0.5s;
+}
+
+.warningbtns button:hover {
+    background-color: #ffc0d09a;
+}
+
+.alerts {
+    position: absolute;
+    top: 40px;
+    right: 50px;
+    z-index: 5;
+}
+
+.alerts .alert {
+    box-shadow: 5px 5px 10px;
+    animation-duration: 5s;
+    animation-name: fade;
+    animation-fill-mode: forwards;
+}
+
+@media (max-width: 767px) {
+    .alerts {
+        top: 10px;
+        right: 15px;
+    }
+    .alerts .alert {
+        box-shadow: 2px 2px 20px;
+    }
+}
+
+@keyframes fade {
+    0% {
+        opacity: 0%;
+    }
+    20% {
+        opacity: 100%;
+    }
+    80% {
+        opacity: 100%;
+    }
+    100% {
+        opacity: 0%;
+    }
+}
+
+.alerts .alert:not(:last-child) {
+    margin-bottom: 15px;
+}

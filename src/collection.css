@@ -1,0 +1,74 @@
+.center {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%)
+}
+
+.flexCenter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.noArrows::-webkit-outer-spin-button,
+.noArrows::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+/* Firefox */
+.noArrows {
+    -moz-appearance: textfield;
+}
+
+.boxInput {
+    position: relative;
+}
+
+.boxInput input {
+    width: 90%;
+    padding: 14px 10px;
+    font-size: 16px;
+    border: 1px solid #068fff;
+    outline: none;
+    border-radius: 8px;
+}
+
+.boxInput label {
+    position: absolute;
+    top: 50%;
+    left: 25px;
+    transform: translateY(-50%);
+    color: #888;
+    font-size: 16px;
+    pointer-events: none;
+    transition: 0.3s ease;
+    background-color: #FFFFFF;
+    padding: 0 5px;
+}
+
+@media (max-width: 767px) {
+    .boxInput label {
+        left: 15px;
+    }
+}
+
+.boxInput input:focus+label, 
+.boxInput input:not(:placeholder-shown)+label {
+    top: -1px;
+    font-size: 14px;
+}
+
+.hide {
+    display: none;
+    transition-duration: 0.3s;
+}
+
+.redBorder input {
+    border: 1px solid red;
+}
+
+.backLime {
+    background-color: #81BB43 !important;
+    color: white !important;
+}
