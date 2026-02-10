@@ -9,24 +9,24 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 const theme = createTheme({
   palette: {
     primary: {
-      light: '#757ce8',
-      main: '#3f50b5',
-      dark: '#002884',
-      contrastText: '#fff',
+      light: '#6573c3',
+      main: '#3f51b5',
+      dark: '#2c387e',
+      contrastText: '#ffffff',
     },
     secondary: {
       light: '#ff7961',
       main: '#f44336',
       dark: '#ba000d',
-      contrastText: '#000',
+      contrastText: '#ffffff',
     },
+  },
+  typography: {
+    fontFamily: ["cairo"],
   },
 });
 
-function App() {
-  // localStorage.removeItem("toDoData")
-  const storedTasks = localStorage.getItem("toDoData")
-  const [toDo, setToDo] = useState(storedTasks ? JSON.parse(storedTasks) : [
+const intialTodo = [
   {
     id: 1,
     title: "قراءة كتاب",
@@ -51,10 +51,25 @@ function App() {
     description: "إضافة المشاريع الجديدة المكتملة",
     state: "done"
   }
-])
+]
+
+function App() {
+  // localStorage.removeItem("toDoData")
+  const storedTasks = localStorage.getItem("toDoData")
+  const [toDo, setToDo] = useState(storedTasks ? JSON.parse(storedTasks) : intialTodo)
 
   return (
     <div className="App">
+      <style>
+        {`
+          :root {
+            --primary-light: ${theme.palette.primary.light};
+            --primary-main: ${theme.palette.primary.main};
+            --primary-dark: ${theme.palette.primary.dark};
+            --primary-contrastText: ${theme.palette.primary.contrastText};
+          }
+        `}
+      </style>
       <ThemeProvider theme={theme}>
         <ToDoContext.Provider value={[toDo, setToDo]}>
           <div className="toDo flexCenter">

@@ -3,7 +3,6 @@ import { useContext, useState, useEffect } from "react";
 import { ToDoContext } from "./contexts";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
-import ButtonGroup from '@mui/material/ButtonGroup';
 import IconButton from '@mui/material/IconButton';
 import CheckIcon from '@mui/icons-material/Check';
 import EditIcon from '@mui/icons-material/Edit';
@@ -15,25 +14,31 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Alert from '@mui/material/Alert';
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
 export default function ToDo() {
   const [toDo, setToDo] = useContext(ToDoContext);
   const [title, setTitle] = useState("")
-  const [selectedOption, setSelectedOption] = useState("inProgress")
+  const [selectedOption, setSelectedOption] = useState("all")
   const [warning, setWarning] = useState({ opened: false, target: "" });
   const [editTask, setEditTask] = useState({ opened: false, target: "" })
 
   useEffect(() => {
     localStorage.setItem('toDoData', JSON.stringify(toDo));
-  });
+  }, [toDo]);
 
   const buttons = [
-    <Button key="one" className={selectedOption === "inProgress" ? "selected one" : "one"} onClick={() => { setSelectedOption("inProgress") }}>غير منجز</Button>,
-    <Button key="two" className={selectedOption === "done" ? "selected two" : "two"} onClick={() => { setSelectedOption("done") }}>منجز</Button>,
-    <Button key="three" className={selectedOption === "all" ? "selected three" : "three"} onClick={() => { setSelectedOption("all") }}>الكل</Button>,
+    <ToggleButton  key="one" value="inProgress" >غير منجز</ToggleButton>,
+    <ToggleButton  key="two" value="done" >منجز</ToggleButton>,
+    <ToggleButton  key="three" value="all" >الكل</ToggleButton>,
   ];
 
   const [alerts, setAlerts] = useState([])
+
+  function handleSelectOption(e) {
+    setSelectedOption(() => e.target.value)
+  }
 
   function handleDeleteTask() {
     setToDo((toDo) => {
@@ -118,9 +123,9 @@ export default function ToDo() {
             <h4>{task.description}</h4>
           </div>
           <div className="icons">
-            <IconButton color="secondary" aria-label="add an alarm" className="icon icon1"><DeleteOutlineIcon onClick={() => { handleClickOpenwarning(task.id) }} /></IconButton>
-            <IconButton color="secondary" aria-label="add an alarm" className="icon icon2"><EditIcon onClick={() => { handleClickOpenEditTask(task) }} /></IconButton>
-            <IconButton color="secondary" aria-label="add an alarm" className={task.state === "done" ? "backLime icon icon3" : "icon icon3"}><CheckIcon onClick={() => { handleSetTaskDone(task.id) }} /></IconButton>
+            <IconButton color="secondary" aria-label="add an alarm" className="icon icon1" onClick={() => { handleClickOpenwarning(task.id) }} ><DeleteOutlineIcon /></IconButton>
+            <IconButton color="secondary" aria-label="add an alarm" className="icon icon2" onClick={() => { handleClickOpenEditTask(task) }} ><EditIcon /></IconButton>
+            <IconButton color="secondary" aria-label="add an alarm" className={task.state === "done" ? "backLime icon icon3" : "icon icon3"} onClick={() => { handleSetTaskDone(task.id) }} ><CheckIcon /></IconButton>
           </div>
         </div>
       );
@@ -206,12 +211,19 @@ export default function ToDo() {
             <h1>مهامي</h1>
             <hr />
           </div>
-          <ButtonGroup variant="outlined" color="secondary" aria-label="Medium-sized button group" className="options">
+          <ToggleButtonGroup
+            value={selectedOption}
+            exclusive
+            onChange={handleSelectOption}
+            aria-label="text alignment"
+            className="options"
+            color="secondary"
+          >
             {buttons}
-          </ButtonGroup>
+          </ToggleButtonGroup>
           <div className="tasks">{toDoList}</div>
           <div className="add">
-            <Button variant="contained" className="btnTitle" onClick={handleAddNewTask}>إضافة</Button>
+            <Button variant="contained" className="btnTitle" style={{backgroundColor: title? "var(--primary-dark)" : "var(--primary-light)"}} onClick={() => title? handleAddNewTask : handleAddNewAlert("error", "يجب ان تملأ عنوان المهمة اولاً")}>إضافة</Button>
             <TextField id="outlined-basic" label="عنوان المهمة" value={title} variant="outlined" onChange={(e) => {
               setTitle(e.target.value)
             }} />
