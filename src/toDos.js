@@ -1,5 +1,5 @@
 import "./toDo.css";
-import { useContext, useState, useEffect, useMemo } from "react";
+import { useContext, useState, useEffect, useMemo, useCallback } from "react";
 import { ToDoContext } from "./contexts";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
@@ -122,12 +122,23 @@ export default function ToDos() {
     setSelectedOption(() => e.target.value)
   }
 
-  function handleSetTaskDone(target) {
+  function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  const handleAddNewAlert = useCallback(async (type, message) => {
+    let id = alerts.length ? alerts[alerts.length - 1].id + 1 : 1;
+    setAlerts((alerts) => { return [...alerts, { id: id, type: type, message: message }] })
+    await sleep(5000)
+    setAlerts((alerts) => { return alerts.filter((alert) => { return alert.id !== id }) })
+  }, [alerts]);
+
+  const handleSetTaskDone = useCallback((target) => {
     setToDo((toDo) => {
       return toDo.map(task => task.id === target ? { ...task, state: task.state === "done" ? "inProgress" : "done" } : task)
     })
     handleAddNewAlert("success", "تم تحديث حاله المهمة بنجاح")
-  }
+  }, [handleAddNewAlert, setToDo]);
 
   function handleAddNewTask() {
     setToDo((toDo) => {
@@ -142,17 +153,6 @@ export default function ToDos() {
       return ""
     })
     handleAddNewAlert("success", "تم اضافة المهمة بنجاح")
-  }
-
-  function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
-
-  async function handleAddNewAlert(type, message) {
-    let id = alerts.length ? alerts[alerts.length - 1].id + 1 : 1;
-    setAlerts((alerts) => { return [...alerts, { id: id, type: type, message: message }] })
-    await sleep(5000)
-    setAlerts((alerts) => { return alerts.filter((alert) => { return alert.id !== id }) })
   }
   // ===== Import Functions End =====
 
@@ -227,7 +227,7 @@ export default function ToDos() {
     } else {
       return <div className="noTasks">لا يوجد مهام</div>
     }
-  }, [selectedOption, toDo]);
+  }, [selectedOption, toDo, handleSetTaskDone]);
 
   let alertsList = useMemo(() => {
     return alerts.map((alert) => {
