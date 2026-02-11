@@ -168,7 +168,7 @@ h6 {
 }
 
 @media (min-width: 768px) {
-    .warning {
+    .warningTitle {
         min-width: 350px !important;
     }
 
@@ -177,7 +177,8 @@ h6 {
     }
 }
 
-.warningbtns button {
+.warningbtns button,
+.editTaskbtns button {
     font-size: 15px;
     font-weight: bold;
     transition-duration: 0.5s;
@@ -186,6 +187,19 @@ h6 {
 /* .warningbtns button:hover {
     background-color: #ffc0d09a;
 } */
+
+@media (max-width: 767px) {
+    .warningTitle {
+        font-size: 16px !important;
+    }
+    .warningDetails {
+        font-size: 13px !important;
+    }
+    .warningbtns button,
+    .editTaskbtns button {
+        font-size: 13px !important;
+    }
+}
 
 .alerts {
     position: absolute;

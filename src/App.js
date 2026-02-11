@@ -1,7 +1,7 @@
 import './App.css';
 import "./collection.css"
 import { useState } from 'react';
-import ToDo from './toDo';
+import ToDos from './toDos';
 import { ToDoContext } from './contexts';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -73,7 +73,7 @@ function App() {
       <ThemeProvider theme={theme}>
         <ToDoContext.Provider value={[toDo, setToDo]}>
           <div className="toDo flexCenter">
-            <ToDo />
+            <ToDos />
           </div>
         </ToDoContext.Provider>
       </ThemeProvider>
