@@ -223,7 +223,7 @@ export default function ToDo() {
           </ToggleButtonGroup>
           <div className="tasks">{toDoList}</div>
           <div className="add">
-            <Button variant="contained" className="btnTitle" style={{backgroundColor: title? "var(--primary-dark)" : "var(--primary-light)"}} onClick={() => title? handleAddNewTask : handleAddNewAlert("error", "يجب ان تملأ عنوان المهمة اولاً")}>إضافة</Button>
+            <Button variant="contained" className="btnTitle" style={{backgroundColor: title? "var(--primary-dark)" : "var(--primary-light)"}} onClick={() => title? handleAddNewTask() : handleAddNewAlert("error", "يجب ان تملأ عنوان المهمة اولاً")}>إضافة</Button>
             <TextField id="outlined-basic" label="عنوان المهمة" value={title} variant="outlined" onChange={(e) => {
               setTitle(e.target.value)
             }} />
