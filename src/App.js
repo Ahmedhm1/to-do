@@ -1,8 +1,9 @@
 import './App.css';
 import "./collection.css"
-import { useState } from 'react';
-import ToDos from './toDos';
-import { ToDoContext } from './contexts';
+import ToDos from './components/toDos';
+import { ToDoProvider } from './contexts/ToDoContext';
+import { ToastProvider } from './contexts/ToastContext';
+
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
@@ -26,37 +27,8 @@ const theme = createTheme({
   },
 });
 
-const intialTodo = [
-  {
-    id: 1,
-    title: "قراءة كتاب",
-    description: "الإنجاز قبل نهاية الشهر",
-    state: "done"
-  },
-  {
-    id: 2,
-    title: "إنهاء كورس ريأكت",
-    description: "مهم جداً لإدارة الـ State في المشاريع الكبيرة",
-    state: "inProgress"
-  },
-  {
-    id: 3,
-    title: "ممارسة الرياضة",
-    description: "المشي لمدة 30 دقيقة يومياً",
-    state: "inProgress"
-  },
-  {
-    id: 4,
-    title: "تحديث السيرة الذاتية (CV)",
-    description: "إضافة المشاريع الجديدة المكتملة",
-    state: "done"
-  }
-]
-
 function App() {
   // localStorage.removeItem("toDoData")
-  const storedTasks = localStorage.getItem("toDoData")
-  const [toDo, setToDo] = useState(storedTasks ? JSON.parse(storedTasks) : intialTodo)
 
   return (
     <div className="App">
@@ -71,11 +43,13 @@ function App() {
         `}
       </style>
       <ThemeProvider theme={theme}>
-        <ToDoContext.Provider value={[toDo, setToDo]}>
-          <div className="toDo flexCenter">
-            <ToDos />
-          </div>
-        </ToDoContext.Provider>
+        <div className="toDo flexCenter">
+          <ToDoProvider>
+            <ToastProvider>
+              <ToDos />
+            </ToastProvider>
+          </ToDoProvider>
+        </div>
       </ThemeProvider>
     </div>
   );
